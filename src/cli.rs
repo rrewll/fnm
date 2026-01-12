@@ -1,7 +1,7 @@
 use crate::commands;
 use crate::commands::command::Command;
 use crate::config::FnmConfig;
-use clap::Parser;
+use clap::{CommandFactory, Parser};
 
 #[derive(clap::Parser, Debug)]
 pub enum SubCommand {
@@ -97,9 +97,13 @@ pub struct Cli {
     #[clap(flatten)]
     pub config: FnmConfig,
     #[clap(subcommand)]
-    pub subcmd: SubCommand,
+    pub subcmd: Option<SubCommand>,
 }
 
 pub fn parse() -> Cli {
     Cli::parse()
+}
+
+pub fn print_info() {
+    Cli::command().print_help().unwrap();
 }
