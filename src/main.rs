@@ -42,5 +42,11 @@ mod pretty_serde;
 fn main() {
     env_logger::init();
     let value = crate::cli::parse();
-    value.subcmd.call(value.config);
+    match value.subcmd {
+        Some(subcmd) => subcmd.call(value.config),
+        None => {
+            crate::cli::print_info();
+            std::process::exit(0);
+        }
+    }
 }
